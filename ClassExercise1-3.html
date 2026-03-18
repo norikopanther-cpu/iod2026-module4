@@ -1,0 +1,150 @@
+<!-- build todo function, 
+ when click to isdone button, 
+ a line-through style is added to todo title and todo description -->
+
+<!doctype html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #e3f2fd;
+      }
+
+      .card {
+        padding: 10px;
+        margin: 10px 0;
+        background: white;
+        border-radius: 8px;
+      }
+
+      .card-title {
+        font-weight: 600;
+        font-size: 2em;
+        padding: 0 0 10px 0;
+      }
+
+      .card-text {
+        font-weight: 400;
+        font-size: 1.2em;
+      }
+
+      .todoDone {
+        text-decoration: line-through;
+      }
+    </style>
+  </head>
+
+  <body>
+    <form onsubmit="addTodoToList(event)">
+      <div>
+        <label for="title">Title: </label>
+        <input type="text" id="title" name="title" />
+      </div>
+
+      <div>
+        <label for="desc">Description: </label>
+        <input type="text" id="desc" name="desc" />
+      </div>
+
+      <button type="submit">Save</button>
+    </form>
+
+    <template id="card-template">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title"></div>
+          <div class="card-text"></div>
+          <div>
+            <label>Done</label>
+            <input type="checkbox" class="isDoneCheck" />
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <div id="todo-list"></div>
+
+    <script>
+      const todos = [
+        { id: 1,
+          title: "Exercise 1",
+          desc: "Build a ToDo function",
+          isDone: true,
+        },
+        {
+          id: 3,
+          title: "Exercise 2",
+          desc: "Implement done functionality",
+          isDone: false,
+        },
+      ];
+
+      function addTodoToList(event) {
+        event.preventDefault();
+
+        const title = document.getElementById("title").value;
+        const desc = document.getElementById("desc").value;
+
+        if (title.trim() === "" || desc.trim() === "") {
+          return;
+        }
+
+        todos.push({
+          id: nextId,
+          title: title,
+          desc: desc,
+          isDone: false
+        });
+
+        document.getElementById("title").value = "";
+        document.getElementById("desc").value = "";
+
+        renderTodos();
+      }
+
+      function addTodo(todo) {
+        const template = document
+          .getElementById("card-template")
+          .content.cloneNode(true);
+
+        const titleSection = template.querySelector(".card-title");
+        const descSection = template.querySelector(".card-text");
+        const checkButton = template.querySelector(".isDoneCheck");
+
+        titleSection.innerText = todo.title;
+        descSection.innerText = todo.desc;
+        checkButton.checked = todo.isDone;
+
+        if (todo.isDone) {
+          titleSection.classList.add("todoDone");
+          descSection.classList.add("todoDone");
+        }
+
+        checkButton.addEventListener("change", function () {
+          todo.isDone = checkButton.checked;
+
+          if (checkButton.checked) {
+            titleSection.classList.add("todoDone");
+            descSection.classList.add("todoDone");
+          } else {
+            titleSection.classList.remove("todoDone");
+            descSection.classList.remove("todoDone");
+          }
+        });
+
+        document.getElementById("todo-list").appendChild(template);
+      }
+
+      function renderTodos() {
+        document.getElementById("todo-list").innerHTML = "";
+
+        todos.forEach((todo) => {
+          addTodo(todo);
+        });
+      }
+
+      renderTodos();
+    </script>
+  </body>
+</html>

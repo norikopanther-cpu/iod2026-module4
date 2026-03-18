@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #E3F2FD
+;
+      }
+      .card {
+        padding: 10px;
+      }
+      .card-title {
+        font-weight: 600;
+        font-size: 3em;
+        padding: 0 0 10px 0;
+      }
+      .todoDone {
+        text-decoration: line-through;
+      }
+      .card-description {
+        font-weight: 400;
+        font-size: 2em;
+      }
+    </style>
+  </head>
+  <body>
+    <form onsubmit="addTodoToList(event)">
+      <div>
+        <label for="title">Title: </label>
+        <input type="text" id="title" name="title" />
+      </div>
+      <div>
+        <label for="desc">Description:</label>
+        <input type="text" id="desc" name="desc" />
+      </div>
+      <button type="submit">Save</button>
+    </form>
+    <template id="card-template">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title"></div>
+          <div class="card-text"></div>
+          <div>
+            <label for="done">Done</label>
+            <input type="checkbox" id="isDoneCheck" />
+          </div>
+        </div>
+      </div>
+    </template>
+    <div id="todo-list"></div>
+  </body>
+  <script>
+    const todos = [];
+
+    function addTodoToList(event) {
+      event.preventDefault();
+      const title = document.getElementById("title").value;
+      const desc = document.getElementById("desc").value;
+      let id = 0;
+      if (todos.length == 0) {
+        id = 1;
+      } else {
+        const ids = todos.map((todo) => todo.id);
+        const max = Math.max(...ids);
+        id = max + 1;
+      }
+      todos.push({ id, title, desc });
+      document.getElementById("todo-list").innerHTML = "";
+      todos.forEach((todo) => {
+        addTodo(todo);
+      });
+    }
+    // display element to html page
+    function addTodo({ id, title, desc, isDone }) {
+      // clone the template
+      const template = document
+        .getElementById("card-template")
+        .content.cloneNode(true);
+      // populate the template
+      const titleSection = template.querySelector(".card-title");
+      titleSection.innerText = title;
+      const descSection = template.querySelector(".card-text");
+      descSection.innerText = desc;
+      const checkButton = template.querySelector("#isDoneCheck");
+      checkButton.addEventListener("click", () => {
+        const todoIndex = todos.findIndex((todo) => todo.id == id);
+        if (todoIndex > -1) {
+          todos[todoIndex].isDone = !todos[todoIndex].isDone;
+          document.getElementById("todo-list").innerHTML = "";
+          todos.forEach((todo) => {
+            addTodo(todo);
+          });
+        }
+      });
+      if (isDone) {
+        titleSection.classList.add("todoDone");
+        descSection.classList.add("todoDone");
+        checkButton.checked = true;
+      }
+      // include the populated template into the page
+      document.querySelector("#todo-list").appendChild(template);
+    }
+    todos.forEach((todo) => {
+      addTodo(todo);
+    });
+  </script>
+</html>
+
+

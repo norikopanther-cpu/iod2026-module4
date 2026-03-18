@@ -1,0 +1,96 @@
+// build todo function, when click to isdone button, a line-through style is add to todo title and todo description
+
+<!doctype html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #e3f2fd;
+      }
+      .card {
+        padding: 10px;
+      }
+      .card-title {
+        font-weight: 600;
+        font-size: 3em;
+        padding: 0 0 10px 0;
+      }
+      .todoDone {
+        text-decoration: line-through;
+      }
+      .card-description {
+        font-weight: 400;
+        font-size: 2em;
+      }
+    </style>
+  </head>
+  <body>
+    <form onsubmit="addTodoToList(event)">
+      <div>
+        <label for="title">Title: </label>
+        <input type="text" id="title" name="title" />
+      </div>
+      <div>
+        <label for="desc">Description:</label>
+        <input type="text" id="desc" name="desc" />
+      </div>
+      <button type="submit">Save</button>
+    </form>
+    <template id="card-template">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title"></div>
+          <div class="card-text"></div>
+          <div>
+            <label for="done">Done</label>
+            <input type="checkbox" id="isDoneCheck" />
+          </div>
+        </div>
+      </div>
+    </template>
+    <div id="todo-list"></div>
+  </body>
+  <script>
+    const todos = [
+      {
+        title: " this is a title1",
+        desc: "this is a desc1",
+        isDone: true,
+      },
+      { title: " this is a title2", desc: "this is a desc2", isDone: false },
+    ];
+    function addTodoToList(event) {
+      event.preventDefault();
+      const title = document.getElementById("title").value;
+      const desc = document.getElementById("desc").value;
+      todos.push({ title, desc });
+      document.getElementById("todo-list").innerHTML = "";
+      todos.forEach((todo) => {
+        addTodo(todo);
+      });
+    }
+    function addTodo({ title, desc, isDone }) {
+      // clone the template
+      const template = document
+        .getElementById("card-template")
+        .content.cloneNode(true);
+      // populate the template
+      const titleSection = template.querySelector(".card-title");
+      titleSection.innerText = title;
+      const descSection = template.querySelector(".card-text");
+      descSection.innerText = desc;
+      if (isDone) {
+        titleSection.classList.add("todoDone");
+        descSection.classList.add("todoDone");
+        const checkButton = template.querySelector("#isDoneCheck");
+        checkButton.checked = true;
+      }
+      // include the populated template into the page
+      document.querySelector("#todo-list").appendChild(template);
+    }
+    todos.forEach((todo) => {
+      addTodo(todo);
+    });
+  </script>
+</html>
