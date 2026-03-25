@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pastel Envelopes</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  background: #ffffff;
+  perspective: 1000px; /* optional for depth */
+}
+
+/* Envelope */
+.envelope {
+  position: relative;
+  width: 220px;
+  height: 160px;
+  cursor: pointer;
+  transition: transform 0.4s ease;
+}
+
+.envelope:hover {
+  transform: translateY(-5px);
+}
+
+/* Zoom when opened */
+.envelope.open {
+  transform: scale(1.4) translateY(-20px);
+  z-index: 10;
+}
+
+/* Back */
+.body-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--env);
+  z-index: 1;
+}
+
+/* Flap */
+.flap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--env-flap);
+  clip-path: polygon(0 0, 100% 0, 50% 55%);
+  z-index: 3;
+  transform-origin: top;
+  transition: transform 0.5s ease;
+}
+
+/* Front folds */
+.front-left,
+.front-right,
+.front-bottom {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.front-left {
+  background: var(--env-left);
+  clip-path: polygon(0 0, 50% 55%, 0 100%);
+}
+
+.front-right {
+  background: var(--env-right);
+  clip-path: polygon(100% 0, 50% 55%, 100% 100%);
+}
+
+.front-bottom {
+  background: var(--env-bottom);
+  clip-path: polygon(0 100%, 50% 55%, 100% 100%);
+}
+
+/* OPEN animation (flap flip) */
+.open .flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+/* 🎨 Colours */
+
+/* Yellow */
+.yellow {
+  --env: #f4e58a;
+  --env-left: #e6d86f;
+  --env-right: #e6d86f;
+  --env-bottom: #efe07a;
+  --env-flap: #fbf3b2;
+}
+
+/* Blue */
+.blue {
+  --env: #a9cde8;
+  --env-left: #8fb9d8;
+  --env-right: #8fb9d8;
+  --env-bottom: #9fc5e2;
+  --env-flap: #cfe4f5;
+}
+
+/* Pink */
+.pink {
+  --env: #e9aebe;
+  --env-left: #d895a7;
+  --env-right: #d895a7;
+  --env-bottom: #e2a3b4;
+  --env-flap: #f4c8d4;
+}
+</style>
+</head>
+
+<body>
+
+<div class="envelope yellow" onclick="toggleEnvelope(this)">
+  <div class="body-back"></div>
+  <div class="flap"></div>
+  <div class="front-left"></div>
+  <div class="front-right"></div>
+  <div class="front-bottom"></div>
+</div>
+
+<div class="envelope blue" onclick="toggleEnvelope(this)">
+  <div class="body-back"></div>
+  <div class="flap"></div>
+  <div class="front-left"></div>
+  <div class="front-right"></div>
+  <div class="front-bottom"></div>
+</div>
+
+<div class="envelope pink" onclick="toggleEnvelope(this)">
+  <div class="body-back"></div>
+  <div class="flap"></div>
+  <div class="front-left"></div>
+  <div class="front-right"></div>
+  <div class="front-bottom"></div>
+</div>
+
+<script>
+function toggleEnvelope(el) {
+  el.classList.toggle("open");
+}
+</script>
+
+</body>
+</html>

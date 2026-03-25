@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pastel Envelopes</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  background: #ffffff;
+  perspective: 1000px;
+  overflow: hidden;
+  transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
+}
+
+/* page exit effect */
+body.page-exit {
+  opacity: 0;
+  transform: scale(1.02);
+  filter: blur(4px);
+}
+
+/* Envelope */
+.envelope {
+  position: relative;
+  width: 220px;
+  height: 160px;
+  cursor: pointer;
+  transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
+}
+
+.envelope:hover {
+  transform: translateY(-5px);
+}
+
+/* When clicked/opened */
+.envelope.open {
+  transform: scale(1.4) translateY(-20px);
+  z-index: 10;
+}
+
+/* Stronger zoom before redirect */
+.envelope.launch {
+  transform: scale(2.2) translateY(-30px);
+  z-index: 20;
+}
+
+/* Other envelopes fade back */
+.envelope.dim {
+  opacity: 0.18;
+  transform: scale(0.9);
+  filter: blur(2px);
+}
+
+/* Back */
+.body-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--env);
+  z-index: 1;
+}
+
+/* Flap */
+.flap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--env-flap);
+  clip-path: polygon(0 0, 100% 0, 50% 55%);
+  z-index: 3;
+  transform-origin: top;
+  transition: transform 0.5s ease;
+}
+
+/* Front folds */
+.front-left,
+.front-right,
+.front-bottom {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.front-left {
+  background: var(--env-left);
+  clip-path: polygon(0 0, 50% 55%, 0 100%);
+}
+
+.front-right {
+  background: var(--env-right);
+  clip-path: polygon(100% 0, 50% 55%, 100% 100%);
+}
+
+.front-bottom {
+  background: var(--env-bottom);
+  clip-path: polygon(0 100%, 50% 55%, 100% 100%);
+}
+
+/* flap opens */
+.open .flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+/* Colours */
+.yellow {
+  --env: #f4e58a;
+  --env-left: #e6d86f;
+  --env-right: #e6d86f;
+  --env-bottom: #efe07a;
+  --env-flap: #fbf3b2;
+}
+
+.blue {
+  --env: #a9cde8;
+  --env-left: #8fb9d8;
+  --env-right: #8fb9d8;
+  --env-bottom: #9fc5e2;
+  --env-flap: #cfe4f5;
+}
+
+.pink {
+  --env: #e9aebe;
+  --env-left: #d895a7;
+  --env-right: #d895a7;
+  --env-bottom: #e2a3b4;
+  --env-flap: #f4c8d4;
+}
+</style>
+</head>
+<body>
+
+<div class="envelope yellow" onclick="openAndGo(this, 'gallery-yellow.html')">
+  <div class="body-back"></div>
+  <div class="flap"></div>
+  <div class="front-left"></div>
+  <div class="front-right"></div>
+  <div class="front-bottom"></div>
+</div>
+
+<div class="envelope blue" onclick="openAndGo(this, 'gallery-blue.html')">
+  <div class="body-back"></div>
+  <div class="flap"></div>
+  <div class="front-left"></div>
+  <div class="front-right"></div>
+  <div class="front-bottom"></div>
+</div>
+
+<div class="envelope pink" onclick="openAndGo(this, 'gallery-pink.html')">
+  <div class="body-back"></div>
+  <div class="flap"></div>
+  <div class="front-left"></div>
+  <div class="front-right"></div>
+  <div class="front-bottom"></div>
+</div>
+
+<script>
+let isAnimating = false;
+
+function openAndGo(el, url) {
+  if (isAnimating) return;
+  isAnimating = true;
+
+  const allEnvelopes = document.querySelectorAll('.envelope');
+
+  allEnvelopes.forEach(env => {
+    if (env !== el) env.classList.add('dim');
+  });
+
+  el.classList.add('open');
+
+  setTimeout(() => {
+    el.classList.add('launch');
+  }, 450);
+
+  setTimeout(() => {
+    document.body.classList.add('page-exit');
+  }, 900);
+
+  setTimeout(() => {
+    window.location.href = url;
+  }, 1500);
+}
+</script>
+
+</body>
+</html>
