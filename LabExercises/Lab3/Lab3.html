@@ -2,24 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #e3f2fd;
-         }
-        .card {
-            padding: 10px;
-        }
-        .card-title {
-            font-weight: 600;
-            font-size: 3em;
-            padding: 0 0 10px 0;
-        }
-        .card-text {
-            font-weight: 400;
-            font-size: 2em;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab 3 Exercises</title>
+    <link rel="stylesheet" href="Lab3.css">
     </head>
     <body>
         <template id="card-template">
@@ -30,45 +15,14 @@
                 </div>
             </div>
         </template>
-<div id="card-list"></div>
+    <div class="section" id="section">
+      <div id="card-list"></div>
+    </div>
 </body>
+<script src="Lab3Original.js"></script>
+<script src="Lab3Ex1.js"></script>
+<script src="Lab3Ex2.js"></script>
+<script src="Lab3Ex3.js"></script>
 
-<script>
-
-//Exercise1
-function addCard(title, text) { // clone the template
-    const template = document.getElementById("card-template")
-    .content.cloneNode(true); // populate the template
-    template.querySelector('.card-title').innerText = title;
-    template.querySelector('.card-text').innerHTML = text; // include the populated template into the page
-    document.querySelector('#card-list')
-    .appendChild(template);
-}
-    addCard("Card 1", "This is the first card");
-    addCard("Card 2", "This is the second card");
-    addCard("Card 3", "This is the third card");
-
-//Exercise2
-const data = [{name: 'Bob', age: 23}, {name: 'Alice', age: 39}]
-data.forEach(person => addCard(person.name, `Age: ${person.age}`))
-
-//Exercise3
-const artist = {
-        name: "Van Gogh",
-        portfolio: [
-          {
-            title: "Portrait",
-            url: "https://collectionapi.metmuseum.org/api/collection/v1/iiif/436532/1671316/main-image"
-          },
-          {
-            title: "Sky",
-            url: "Sky.jpg"
-          }
-        ]
-      };
-
-      artist.portfolio.forEach(p =>
-        addCard(`${artist.name} - ${p.title}`, `<img src="${p.url}" alt="${p.title}" width="200"/>`)
-      );</script>
 
 </html>
