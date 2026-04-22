@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fake E-Commerce Website</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+  />
+  <link rel="stylesheet" href="Lab10.css" />
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="text-center mb-4">Fake E-Commerce Store</h1>
+
+    <!-- Controls -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <input
+          type="text"
+          id="searchInput"
+          class="form-control"
+          placeholder="Search by title..."
+        />
+      </div>
+
+      <div class="col-md-4">
+        <select id="categoryFilter" class="form-select">
+          <option value="all">All Categories</option>
+        </select>
+      </div>
+
+      <div class="col-md-4">
+        <select id="sortSelect" class="form-select">
+          <option value="default">Sort By</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="title-asc">Title: A to Z</option>
+          <option value="title-desc">Title: Z to A</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Products -->
+    <div class="row" id="productList"></div>
+  </div>
+
+  <script src="Lab10.js"></script>
+</body>
+</html>

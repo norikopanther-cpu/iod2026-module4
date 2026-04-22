@@ -13,6 +13,6 @@ const artist = {
         ]
       };
 
-      artist.portfolio.forEach(p =>
-        addCard(`${artist.name} - ${p.title}`, `<img src="${p.url}" alt="${p.title}" width="200"/>`)
+      artist.portfolio.forEach(
+        p => addCard(`${artist.name} - ${p.title}`, `<img src="${p.url}" alt="${p.title}" width="200"/>`)
       );

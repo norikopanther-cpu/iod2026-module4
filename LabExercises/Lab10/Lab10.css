@@ -1,0 +1,58 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.card-img-top {
+  height: 220px;
+  object-fit: contain;
+  padding: 1rem;
+  background: white;
+}
+
+.product-card {
+  height: 100%;
+}
+
+.card-title {
+  font-size: 1rem;
+  min-height: 48px;
+}
+
+.category-badge {
+  font-size: 0.85rem;
+}
+
+.description-wrapper {
+  position: relative;
+  min-height: 72px;
+}
+
+.description-preview,
+.description-full {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+/* default: show only a few lines */
+.description-preview {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* full text hidden by default */
+.description-full {
+  display: none;
+}
+
+/* on hover: hide preview, show full text */
+.description-wrapper:hover .description-preview {
+  display: none;
+}
+
+.description-wrapper:hover .description-full {
+  display: block;
+}
